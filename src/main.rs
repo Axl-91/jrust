@@ -1,5 +1,5 @@
 mod json;
-use json::json_reader::{load_json, read_json};
+use json::json_reader::{load_json, show_json};
 use std::{env, process};
 
 const JSON_ARG: usize = 1;
@@ -16,7 +16,7 @@ fn main() {
     let json_path = &args[JSON_ARG];
     let json = load_json(json_path);
 
-    if let Err(err_msg) = read_json(json, INIT_OFFSET) {
+    if let Err(err_msg) = show_json(json, INIT_OFFSET) {
         println!("{}", err_msg);
     }
 }
