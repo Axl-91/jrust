@@ -1,0 +1,36 @@
+{
+  "project": "Rusty JSON Viewer",
+  "metadata": {
+    "version": "0.2.0",
+    "author": {
+      "name": "Axel",
+      "contact": {
+        "email": "axel@example.com",
+        "github": "https://github.com/axel"
+      }
+    },
+    "license": "MIT"
+  },
+  "features": [
+    "view",
+    "scroll",
+    {
+      "edit": {
+        "status": "in progress",
+        "planned_release": "2025-12-01"
+      }
+    }
+  ],
+  "settings": {
+    "theme": {
+      "name": "dark",
+      "colors": {
+        "background": "#1e1e1e",
+        "text": "#c5c6c7",
+        "highlight": "#45a29e"
+      }
+    },
+    "wrap_text": true,
+    "show_line_numbers": false
+  }
+}
