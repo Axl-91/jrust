@@ -14,19 +14,23 @@ pub fn load_json(file_path: &str) -> Value {
 }
 
 fn show_array(array: Vec<Value>, offset: u32) -> Result<(), String> {
+    add_offset(offset);
+    println!("[");
     for val in array {
         match val {
             Value::Array(arr) => {
                 add_offset(offset);
-                show_array(arr, offset)?
+                show_array(arr, offset + 1)?
             }
-            Value::Object(_) => show_json(val, offset)?,
+            Value::Object(_) => show_json(val, offset + 1)?,
             _ => {
-                add_offset(offset);
+                add_offset(offset + 1);
                 println!("{}", val)
             }
         }
     }
+    add_offset(offset);
+    println!("]");
     Ok(())
 }
 
@@ -34,7 +38,7 @@ pub fn show_json(json: Value, offset: u32) -> Result<(), String> {
     if let Value::Object(map) = json {
         for (key, value) in map {
             add_offset(offset);
-            print!("{}:", key);
+            print!("* {}:", key);
             match value {
                 Value::Array(arr) => {
                     println!();
