@@ -1,7 +1,7 @@
 use color_eyre::eyre::Result;
 use ratatui::{
     crossterm::event::{self, Event, KeyCode, KeyEvent},
-    layout::{Constraint, Layout},
+    layout::{Constraint, Layout, Position},
     style::{Modifier, Style, Stylize},
     text::{Line, Span, Text},
     widgets::{Block, List, ListItem, Paragraph},
@@ -59,10 +59,6 @@ impl App {
 
     fn edit_input(&mut self, key: KeyEvent) {
         match key.code {
-            KeyCode::Char('q') => {
-                self.input.clear();
-                self.edit_mode = false;
-            }
             KeyCode::Esc => {
                 self.input.clear();
                 self.edit_mode = false;
@@ -94,7 +90,7 @@ impl App {
 
     fn get_help_message(&mut self) -> Vec<Span<'_>> {
         if self.edit_mode {
-            vec!["Go back ".into(), "<Esc/q>".blue().bold()]
+            vec!["Go back ".into(), "<Esc>".blue().bold()]
         } else {
             vec![
                 "Exit ".into(),
@@ -122,6 +118,12 @@ impl App {
         let [messages_area, input_area, help_area] = vertical.areas(frame.area());
 
         // Rendering MESSAGES
+        if self.edit_mode {
+            frame.set_cursor_position(Position::new(
+                input_area.x + self.input.len() as u16 + 1,
+                input_area.y + 1,
+            ));
+        }
         let messages: Vec<ListItem> = self
             .messages
             .iter()
