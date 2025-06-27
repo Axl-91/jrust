@@ -1,22 +1,22 @@
-mod json;
-use json::json_reader::{load_json, show_json};
-use std::{env, process};
+mod app;
+use app::App;
+use color_eyre::eyre::Result;
+// use std::{env, process};
 
-const JSON_ARG: usize = 1;
-const INIT_OFFSET: u32 = 0;
+// const JSON_ARG: usize = 1;
 
-fn main() {
-    let args: Vec<String> = env::args().collect();
+fn main() -> Result<()> {
+    // let args: Vec<String> = env::args().collect();
 
-    if args.len() != 2 {
-        eprintln!("Usage: cargo run <json_file>");
-        process::exit(1);
-    }
+    // if args.len() != 2 {
+    //     eprintln!("Usage: cargo run <json_file>");
+    //     process::exit(1);
+    // }
+    // let json = load_json(&args[JSON_ARG]);
 
-    let json_path = &args[JSON_ARG];
-    let json = load_json(json_path);
-
-    if let Err(err_msg) = show_json(json, INIT_OFFSET) {
-        println!("{}", err_msg);
-    }
+    color_eyre::install()?;
+    let terminal = ratatui::init();
+    let app_result = App::new().run(terminal);
+    ratatui::restore();
+    app_result
 }
